@@ -1,0 +1,10 @@
+build:
+  base_name: "devpaschall/cicd_test_app"
+  version: "latest"
+  dockerfile: Dockerfile
+
+test:
+  command: "echo 'Running dummy tests...'"
+
+deploy:
+  registry: "docker.io"
