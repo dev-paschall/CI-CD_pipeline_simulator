@@ -9,7 +9,7 @@ try:
     docker_client.ping()
     logger.info("Docker client initialized successfully.")
 except Exception as e:
-    logger.error("Docker client initialization failed. Is docker running?: %s", e)
+    logger.warning("Docker client initialization failed. Is docker running?: %s", e)
     docker_client = None
 
 def build_image(repo_path, docker_path, image_name):

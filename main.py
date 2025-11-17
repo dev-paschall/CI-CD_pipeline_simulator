@@ -1,7 +1,9 @@
 import time
+import uvicorn
 
 from simulator.logging_config import get_logger
 from simulator.watcher import start_watcher
+from simulator.dashboard import app
 
 logger = get_logger(__name__)
 
@@ -11,19 +13,12 @@ PATH_TO_WATCH = "sample_project"
 def main():
     logger.info("--- CI/CD Simulator Starting Up ---")
     
-    # Start the file watcher
+    # Starts the file watcher
     observer = start_watcher(PATH_TO_WATCH)
 
-    # Keep the main application alive
-    logger.info("Application running. Press Ctrl+C to stop.")
-    try:
-        while True:
-            time.sleep(1)
-    except KeyboardInterrupt:
-        logger.info("Shutting down...")
-        observer.stop()
-        observer.join()
-        logger.info("Watcher stopped. Goodbye.")
+    # starts the fastapi server
+    logger.info("Starting FastAPI dashboard at http://127.0.0.1:8000")
+    uvicorn.run(app, host="127.0.01", port=8000)
 
 if __name__ == "__main__":
     main()
